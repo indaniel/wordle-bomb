@@ -27,8 +27,14 @@ class Gamestate{
     this.countdown -= 1;
     if (this.countdown <= 0){
       // logic
-      this.bomb();
-      this.nextTurn();
+      if (this.queue.length && this.players[this.queue[0]].alive === false){ 
+        delete this.players[this.queue[0]]
+        this.queue.shift();
+        this.nextTurn(false);
+      } else {
+        this.bomb();
+        this.nextTurn();
+      }
     }
   }
 
