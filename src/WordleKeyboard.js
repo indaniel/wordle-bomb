@@ -48,7 +48,7 @@ const WordleKeyboard = ({keyState = defaultKeyState, onKey = () => {}}) => {
           {
             row.map((key, idx) => (
               <div className={`wordle-key flex-grow flex-center ${
-                keyState[key[0]]
+                keyState[key[0].toLowerCase()]
               }`} key={idx} onClick={() => {onKey(key[0])}}>
                 {key[1] || key[0]}
               </div>

@@ -6,7 +6,7 @@ const WordleRow = ({guess, err}) => {
       <div key={idx} className={`flex-center flex-grow wordle-char ${guess[1]}`} style={{
         animationDelay: `${idx * 0.15}s`
       }}>
-        {guess[0]}
+        {guess[0].toUpperCase()}
       </div>
     ))}
     {err && <div className="guess-err flex-center">{err}</div>}

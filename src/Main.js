@@ -96,7 +96,7 @@ const Main = () => {
       <ChatBox/>
     </div>
     <div id="wordle-keyboard">
-      <WordleKeyboard onKey={onKey}/>
+      <WordleKeyboard onKey={onKey} keyState={gameState && gameState.keymaps || {}}/>
     </div>
   </main>
 }

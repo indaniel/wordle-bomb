@@ -42,6 +42,7 @@ server.listen(port, () => {
     console.log("Emitting")
     const ss = gamestate.snapshot();
     console.log(ss)
+    console.log(gamestate.word)
     io.sockets.emit("update",ss)
   });
 
