@@ -1,0 +1,21 @@
+.wordle-key {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0.4rem;
+  border-radius: 0.3rem;
+  background: #444;
+}
+
+.wordle-key.black {
+  background: #111;
+  color: #444;
+}
+
+.wordle-key.yellow {
+  background: #660;
+}
+
+.wordle-key.green {
+  background: #060;
+}

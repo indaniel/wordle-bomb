@@ -6,20 +6,6 @@ main {
   color: #ccc;
 }
 
-.flex-vertical {
-  display: flex;
-  flex-flow: column;
-  align-items: stretch;
-  justify-content: center;
-}
-
-.flex-horizotal {
-  display: flex;
-  flex-flow: row;
-  align-items: stretch;
-  justify-content: center;
-}
-
 #layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -56,5 +42,5 @@ main {
 
 #wordle-keyboard {
   grid-area: wordle-keyboard;
-  background: #4408;
+  /* background: #4408; */
 }

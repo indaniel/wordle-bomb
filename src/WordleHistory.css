@@ -1,0 +1,30 @@
+.wordle-char {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0.2rem;
+  padding: 0.4rem 0rem;
+  border-radius: 0.3rem;
+  background: #444;
+}
+
+.wordle-char.black {
+  background: #111;
+}
+
+.wordle-char.yellow {
+  background: #660;
+}
+
+.wordle-char.green {
+  background: #060;
+}
+
+.new-round {
+  margin: 0.75rem 0;
+  padding: 0.25rem 0;
+  font-weight: 600;
+  border-top: 0.125rem #aaa solid;
+  border-bottom: 0.125rem #aaa solid;
+  letter-spacing: 0.125rem;
+}
