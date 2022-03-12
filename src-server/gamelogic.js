@@ -131,7 +131,9 @@ class Gamestate{
         flag = 0;
       }
       var wordCopy = this.word.split("");
+      var GuessedwordCopy = Guessedword;
       Guessedword = Guessedword.split("");
+  
       for (var i = 0; i < 5; ++i){
         if (this.green[i] != Guessedword[i] && this.green[i] != '0') {
           console.log("flagged green", i, Guessedword[i])
@@ -200,8 +202,10 @@ class Gamestate{
           [Guessedword[4], feedback[4]],
         ]
       });
-
-      if (this.word.split("") == Guessedword){
+      console.log(this.word.split(""));
+      console.log(Guessedword);
+      
+      if (this.word == GuessedwordCopy){
         this.players[uid].score++;
         this.players[uid].highscore = Math.max(this.players[uid].highscore, this.players[uid].score);
         this.players[uid].lives = Math.min(this.players[uid].lives+1, 3);
