@@ -1,5 +1,7 @@
 const express = require('express')
 const app = express()
+const server = require('http').createServer(app)
+const io = require('socket.io')(server,{path:"/api/socket"})
 const port = 3001
 const fs = require('fs')
 const Gamestate = require('./gamelogic');
@@ -11,6 +13,10 @@ app.get('/api/', (req, res) => {
 })
 
 
+io.on('connection',(socket)=>{
+  console.log("user connected")
+  
+})
 
 
 app.get("/api/gamestate", (req, res) => {
@@ -21,8 +27,8 @@ app.get("/api/gamestate", (req, res) => {
 })
 
 
-app.listen(port, () => {
-
+server.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
   gamestate = new Gamestate();
 })
+
