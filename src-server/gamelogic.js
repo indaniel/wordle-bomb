@@ -201,7 +201,7 @@ class Gamestate{
         ]
       });
 
-      if (this.word == Guessedword){
+      if (this.word.split("") == Guessedword){
         this.players[uid].score++;
         this.players[uid].highscore = Math.max(this.players[uid].highscore, this.players[uid].score);
         this.players[uid].lives = Math.min(this.players[uid].lives+1, 3);
