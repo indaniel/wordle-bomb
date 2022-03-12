@@ -6,7 +6,7 @@ class Gamestate{
   constructor(){
       
     this.wordlist = fs.readFileSync('./src-server/official_word_list.txt', 'utf8').split('\r\n');
-    this.allowedWordlist =  fs.readFileSync('./src-server/official_allowed_gusses.txt', 'utf8').split('\r\n');
+    this.allowedWordlist =  fs.readFileSync('./src-server/complete_word_list.txt', 'utf8').split('\r\n');
 
     this.goNext();
     this.players = [];
@@ -31,7 +31,7 @@ class Gamestate{
   goNext(){
     var index = Math.floor(Math.random() * this.wordlist.length);
     this.word = this.wordlist[index];
-    this.word = ""
+    this.word = "truce"
     this.yellow = [[], [], [], [], []];
     this.green = ['0', '0', '0', '0', '0'];
     this.black = [];
