@@ -121,24 +121,24 @@ class Gamestate{
         // return 0;
       }
 
-      var feedback = ['B', 'B', 'B', 'B', 'B'];
+      var feedback = ['black', 'black', 'black', 'black', 'black'];
       var wordCopy = this.word.split("");
       Guessedword = Guessedword.split("");
 
 
       for (var i = 0; i < 5; i++){
         if (Guessedword[i] == wordCopy[i]) {
-          feedback[i] = 'G';
+          feedback[i] = 'green';
           wordCopy[i] = '0';
         }
       }
 
 
       for (var i = 0; i < 5; i++){
-        if (feedback[i] == 'B'){
+        if (feedback[i] == 'black'){
           for(var j = 0; j < 5; j++){
             if (Guessedword[i] == wordCopy[j]){
-              feedback[i] = 'Y';
+              feedback[i] = 'yellow';
               wordCopy[j] = '0';
               break;
             }
@@ -147,9 +147,9 @@ class Gamestate{
       }
 
       for (i = 0; i < 5; i++){
-        if (feedback[i] == 'G'){
+        if (feedback[i] == 'green'){
           this.green[i] = this.word[i];
-        } else if (feedback[i] == 'Y'){
+        } else if (feedback[i] == 'yellow'){
           this.yellow[i].push(Guessedword[i]);
         } else {
           if (!(this.word.includes(Guessedword[i]))){
