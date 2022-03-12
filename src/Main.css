@@ -20,6 +20,10 @@ main {
 @media only screen and (max-width: 600px) {
 }
 
+.scroll-y {
+  overflow-y: auto;
+}
+
 #header {
   grid-area: header;
   text-align: center;
@@ -29,11 +33,13 @@ main {
 
 #players {
   grid-area: players;
-  background: #0408;
+  /* background: #0408; */
 }
 
 #wordle-history {
   grid-area: wordle-history;
+  max-height: calc(100vw - 20rem);
+  overflow: auto;
   /* background: #4008; */
 }
 

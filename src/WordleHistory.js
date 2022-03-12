@@ -47,11 +47,20 @@ const defaultHistory = [
 ]
 
 const WordleHistory = ({historyState=defaultHistory, current=[], err=null}) => {
-  return <div className="flex-vertical wordle-history full-height" style={{
+  return <div className="flex-vertical wordle-history full-height scroll-y" style={{
     justifyContent: 'flex-end',
     maxWidth: 600,
     margin: "0 auto"
   }}>
+    <div>
+      <p>
+        You're playing Wordle on HARD MODE. If there is a yellow or green tile,
+        you have 15 seconds to guess a word that uses them or you'll lose a life.
+        Play then goes to the next player. When this bar turns green, its your turn
+        to play a word. Lose three lives and your streak is reset.
+      </p>
+      <p>Try and get a high score!</p>
+    </div>
     {
       historyState.map((event, idx) => {
         switch(event.type) {

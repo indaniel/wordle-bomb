@@ -1,0 +1,16 @@
+.players-list {
+  overflow: hidden;
+  width: 100vw;
+}
+
+.player-data-me {
+  font-weight: 600;
+}
+
+.players-active {
+  background: #0408;
+}
+
+.player {
+  margin-right: 1rem;
+}

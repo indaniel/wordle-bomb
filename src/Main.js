@@ -10,7 +10,14 @@ import "./Main.css"
 import { useState, useMemo, useCallback, useEffect} from "react"
 
 const Main = () => {
-  const userId = useMemo(() => Math.round(Math.random() * 1000000000).toString(), [])
+  const userId = useMemo(() => {
+    if ("gameid" in window.localStorage) {
+      return window.localStorage.gameid
+    } else {
+      window.localStorage.gameid = Math.round(Math.random() * 10000000000).toString()
+      return window.localStorage.gameid
+    }
+  }, [])
 
   const [socket, setSocket] = useState(null)
   const [gameState, setGameState] = useState(null)
@@ -78,7 +85,7 @@ const Main = () => {
       })
       
     } else {
-      setSocket(io('http://localhost:3000',{path:"/api/socket"}))
+      setSocket(io('https://dev.reg.ress.me',{path:"/api/socket"}))
     }
   }, [socket])
 
@@ -90,7 +97,7 @@ const Main = () => {
       <WordleHistory historyState={gameState && gameState.history || []} current={guess} err={err}/>
     </div>
     <div id="players">
-      <Players/>
+      <Players me={userId} queue={gameState && gameState.queue || []} players={gameState && gameState.playerData || {}}/>
     </div>
     <div id="chatbox">
       <ChatBox/>

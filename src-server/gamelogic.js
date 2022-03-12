@@ -74,6 +74,10 @@ class Gamestate{
   }
 
   join(newID){
+    if (newID in this.players) {
+      return
+    }
+    
     this.players[newID] = {
       id : newID,
       lives : 3,
