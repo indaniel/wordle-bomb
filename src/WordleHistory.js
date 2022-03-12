@@ -45,7 +45,9 @@ const defaultHistory = [
 
 const WordleHistory = ({historyState=defaultHistory, current=[]}) => {
   return <div className="flex-vertical wordle-history full-height" style={{
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    maxWidth: 600,
+    margin: "0 auto"
   }}>
     {
       historyState.map((event, idx) => {
