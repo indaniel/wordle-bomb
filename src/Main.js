@@ -10,8 +10,8 @@ import "./Main.css"
 import { useState, useMemo, useCallback, useEffect} from "react"
 
 const Main = () => {
-  const conn = useMemo(() => io('http://localhost:3000',{path:"/api/socket"}), [])
-  const userId = useMemo(() => Math.round(Math.random() * 1000000000).toString())
+  const socket = useMemo(() => io('http://localhost:3000',{path:"/api/socket"}), [])
+  const userId = useMemo(() => Math.round(Math.random() * 1000000000).toString(), [])
 
   const [guess, setGuess] = useState([])
   const [err, setErr] = useState(null)
@@ -37,12 +37,12 @@ const Main = () => {
       } else {
         console.log("Sending guess!")
         // Send!
-        /*
-        io.emit("guess", {
+        
+        socket.emit("guess", {
           user: userId,
           guess: guess
         })
-        */
+        
       }
       setGuess([])
     }
@@ -50,7 +50,7 @@ const Main = () => {
 
   useEffect(() => {
     /*
-    io.on("update", () => {})
+    socket.on("update", () => {})
     */
   }, [])
 

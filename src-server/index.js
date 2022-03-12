@@ -13,10 +13,18 @@ app.get('/api/', (req, res) => {
 })
 
 
+
+
 io.on('connection',(socket)=>{
   console.log("user connected")
+  // on connect fire join function 
+
+  socket.on("guess",(data)=>
+  console.log(data.user,data.guess))
   
 })
+
+
 
 
 app.get("/api/gamestate", (req, res) => {

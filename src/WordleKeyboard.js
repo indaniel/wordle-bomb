@@ -38,7 +38,10 @@ const WordleKeyboard = ({keyState = defaultKeyState, onKey = () => {}}) => {
     };
   }, [onKey]);
 
-  return <div className="flex-vertical flex-space full-height">
+  return <div className="flex-vertical flex-space full-height" style={{
+    maxWidth: 600,
+    margin: "0 auto",
+  }}>
     {
       keys.map((row, idx) => (
         <div className="flex-horizontal flex-space flex-grow" key={idx}>
