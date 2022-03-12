@@ -1,11 +1,12 @@
 import "./WordleKeyboard.css"
+import {FiDelete, FiCheck} from "react-icons/fi"
 
 import { useMemo, useCallback } from "react"
 
 const keys = [
   ["Q","W","E","R","T","Y","U","I","O","P"],
   ["A","S","D","F","G","H","J","K","L"],
-  ["✔️","Z","X","V","B","N","M","❌"]
+  [["enter", <FiCheck/>],"Z","X","V","B","N","M",["delete", <FiDelete/>]]
 ]
 
 const defaultKeyState = {
@@ -22,9 +23,9 @@ const WordleKeyboard = ({keyState = defaultKeyState, onKey = () => {}}) => {
           {
             row.map((key, idx) => (
               <div className={`wordle-key flex-grow flex-center ${
-                keyState[key]
-              }`} key={idx} onClick={() => {onKey(key)}}>
-                {key}
+                keyState[key[0]]
+              }`} key={idx} onClick={() => {onKey(key[0])}}>
+                {key[1] || key[0]}
               </div>
             ))
           }
