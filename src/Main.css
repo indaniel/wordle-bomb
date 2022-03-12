@@ -14,7 +14,7 @@ main {
     "players"
     "wordle-history"
     "wordle-keyboard";
-  gap: 1rem 0rem;
+  margin-bottom: -1rem;
 }
 
 @media only screen and (max-width: 600px) {

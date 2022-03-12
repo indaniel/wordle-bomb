@@ -4,6 +4,7 @@ import ChatBox from "./ChatBox"
 import WordleKeyboard from "./WordleKeyboard"
 import {io} from 'socket.io-client'
 import {FaBomb} from "react-icons/fa"
+import allowedGuesses from "./AllowedGuesses"
 import "./Main.css"
 
 import { useState, useMemo, useCallback, useEffect} from "react"
@@ -21,15 +22,20 @@ const Main = () => {
       setGuess([
         ...guess, key
       ])
-    } else if (key === "delete") {
+    } else if (key === "BACKSPACE") {
       setGuess(guess.slice(0, -1))
-    } else if (key === "enter") {
+    } else if (key === "ENTER") {
       console.log("Guessing", guess)
+      const guessString = guess.join("").toLowerCase();
       if (guess.length != 5) {
         setErr("Guess a full word!")
-      } else if (false) {
+      } else if (!(guessString in allowedGuesses)) {
+        console.log(allowedGuesses)
         // check if real word here
+        setErr("Guess is not a word!")
+        console.log("Guess is not a word!")
       } else {
+        console.log("Sending guess!")
         // Send!
         /*
         io.emit("guess", {
