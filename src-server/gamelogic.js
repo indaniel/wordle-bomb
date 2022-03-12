@@ -3,16 +3,16 @@ const fs = require('fs')
 
 class Gamestate{
   
-  constructor(){
+  constructor(forceTurn){
       
     this.wordlist = fs.readFileSync('./src-server/official_word_list.txt', 'utf8').split('\r\n');
     this.allowedWordlist =  fs.readFileSync('./src-server/complete_word_list.txt', 'utf8').split('\r\n');
 
-    this.goNext();
-
-    this.players = {};
-    this.queue = [];
-    
+    this.forceTurn = forceTurn;
+    this.players = [];
+    this.currentPlayer = -1;
+    this.players = [];
+    this.playerLives = [];
     this.countdown = 0;
     
     setInterval(this.tick.bind(this), 1000);
@@ -22,15 +22,8 @@ class Gamestate{
     this.countdown -= 1;
     if (this.countdown <= 0){
       // logic
-      if (this.players[this.queue[0]] === false) {
-        // player did not respond to ping, remove from game
-        delete this.players[this.queue[0]]
-        this.queue.shift()
-        this.nextTurn(false);
-      } else {
-        this.bomb();
-        this.nextTurn();
-      }
+      this.bomb();
+      this.nextTurn();
     }
   }
 
@@ -52,7 +45,9 @@ class Gamestate{
         this.queue.push(this.queue.shift());
       }
       this.players[this.queue[0]].alive = false;
+
     }
+    this.forceTurn()
   }
 
   bomb(){

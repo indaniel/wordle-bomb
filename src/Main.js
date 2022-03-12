@@ -12,7 +12,6 @@ import { useState, useMemo, useCallback, useEffect} from "react"
 const Main = () => {
   const socket = useMemo(() => io('http://localhost:3000',{path:"/api/socket"}), [])
   const userId = useMemo(() => Math.round(Math.random() * 1000000000).toString(), [])
-
   const [guess, setGuess] = useState([])
   const [err, setErr] = useState(null)
 
@@ -57,9 +56,9 @@ const Main = () => {
   }, [guess, setGuess])
 
   useEffect(() => {
-    /*
-    socket.on("update", () => {})
-    */
+    socket.on("update", () => {
+
+    })
   }, [])
 
   return <main id="layout">

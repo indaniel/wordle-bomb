@@ -17,11 +17,17 @@ app.get('/api/', (req, res) => {
 
 io.on('connection',(socket)=>{
   console.log("user connected")
-  // on connect fire join function 
+  // on connect fire join function
+  socket.on('join',(data)=>{
+    gamestate.join(data.user)
+  }) 
+  socket.on("guess",(data)=>{
+    gamestate.guessWord(data.guess,data.user)
+    //socket.broadcast.emit(gamestate.snapshot())
+  })
 
-  socket.on("guess",(data)=>
-  console.log(data.user,data.guess))
-  
+
+
 })
 
 
@@ -37,7 +43,9 @@ app.get("/api/gamestate", (req, res) => {
 
 server.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
-  gamestate = new Gamestate();
+  gamestate = new Gamestate(function(){
+    io.sockets.emit("update",gamestate.snapshot())
+  });
   setInterval(() => {
     console.log(gamestate.snapshot());
   }, 500);
