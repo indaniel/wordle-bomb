@@ -83,7 +83,26 @@ class Gamestate{
   }
 
   snapshot(){
-    return {history : this.history.slice(-10), playerData : this.players, current : this.queue[0], queue: this.queue, "Y" : this.yellow, "B" : this.black, "G" : this.green };
+
+    var keymaps = {};
+
+    for (var i = 0; i < 5; i++){
+      for (var j = 0; j < this.yellow[i].length; j++){
+        keymaps[this.yellow[i][j]] = "yellow";
+      }
+    }
+    
+    for (var i = 0; i < 5; i++){
+      if (this.green[i] != '0'){
+          keymaps[this.green[i]] = "green";
+      }
+    }
+
+    for(var i = 0; i < this.black.length; i++){
+      keymaps[this.black[i]] = "black";
+    }
+
+    return {history : this.history.slice(-10), playerData : this.players, current : this.queue[0], queue: this.queue, keymaps : keymaps};
   }
 
   stayAlive(uid) {
