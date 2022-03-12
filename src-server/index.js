@@ -30,5 +30,17 @@ app.get("/api/gamestate", (req, res) => {
 server.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
   gamestate = new Gamestate();
-})
+  setInterval(() => {
+    console.log(gamestate.snapshot());
+  }, 500);
 
+
+
+  gamestate.join("hi");
+  gamestate.join("hello");
+  console.log(gamestate.guessWord('aahed', "hi"));
+  console.log(gamestate.guessWord('aahed', "hello"));
+  console.log(gamestate.guessWord('aahed', "hi"));
+  console.log(gamestate.guessWord('aahed', "hello"));
+  console.log(gamestate.guessWord('aahed', "hello"));
+})
