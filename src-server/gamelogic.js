@@ -9,13 +9,12 @@ class Gamestate{
     this.allowedWordlist =  fs.readFileSync('./src-server/complete_word_list.txt', 'utf8').split('\r\n');
 
     this.forceTurn = forceTurn;
-    this.players = [];
-    this.currentPlayer = -1;
-    this.players = [];
-    this.playerLives = [];
+    this.players = {};
     this.countdown = 0;
+    this.queue = []
     
     setInterval(this.tick.bind(this), 1000);
+    this.goNext();
   }
 
   tick(){
@@ -88,9 +87,11 @@ class Gamestate{
   }
 
   guessWord(Guessedword, uid){
-    console.log(this.word);
-    if (uid != this.players[this.queue[0]].id) return 0;
-    else{
+    // console.log(this.word);
+    if (uid != this.players[this.queue[0]].id) {
+      console.log("not this player's turn")
+      return 0;
+    } else{
       var flag = 1;
       for (var i = 0; i < 5; ++i){
         if (this.green[i] != Guessedword[i] && this.green[i] != '0') flag = 0;

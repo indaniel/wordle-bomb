@@ -10,8 +10,10 @@ import "./Main.css"
 import { useState, useMemo, useCallback, useEffect} from "react"
 
 const Main = () => {
-  const socket = useMemo(() => io('http://localhost:3000',{path:"/api/socket"}), [])
   const userId = useMemo(() => Math.round(Math.random() * 1000000000).toString(), [])
+
+  const [socket, setSocket] = useState(null)
+  const [gameState, setGameState] = useState(null)
   const [guess, setGuess] = useState([])
   const [err, setErr] = useState(null)
 
@@ -47,7 +49,7 @@ const Main = () => {
         
         socket.emit("guess", {
           user: userId,
-          guess: guess
+          guess: guessString
         })
         
       }
@@ -56,10 +58,21 @@ const Main = () => {
   }, [guess, setGuess])
 
   useEffect(() => {
-    socket.on("update", () => {
-
-    })
-  }, [])
+    if (!!socket) {
+      socket.on("connect", () => {
+        console.log("joining")
+        socket.emit("join", {
+          user: userId
+        });
+      });
+  
+      socket.on("update", (e) => {
+        console.log("update", e)
+      })
+    } else {
+      setSocket(io('http://localhost:3000',{path:"/api/socket"}))
+    }
+  }, [socket])
 
   return <main id="layout">
     <div id="header" className="flex-vertical">
