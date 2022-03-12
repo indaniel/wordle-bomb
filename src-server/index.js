@@ -46,9 +46,7 @@ server.listen(port, () => {
 
   gamestate.join("hi");
   gamestate.join("hello");
-  console.log(gamestate.guessWord('aahed', "hi"));
-  console.log(gamestate.guessWord('aahed', "hello"));
-  console.log(gamestate.guessWord('aahed', "hi"));
-  console.log(gamestate.guessWord('aahed', "hello"));
-  console.log(gamestate.guessWord('aahed', "hello"));
+  console.log(gamestate.guessWord('hello', "hi"));
+  console.log(gamestate.guessWord('dolls', "hello"));
+ 
 })

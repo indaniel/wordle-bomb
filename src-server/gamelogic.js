@@ -9,12 +9,12 @@ class Gamestate{
     this.allowedWordlist =  fs.readFileSync('./src-server/complete_word_list.txt', 'utf8').split('\r\n');
 
     this.goNext();
-    this.players = [];
+
+    this.players = {};
+    this.queue = [];
     
-    this.currentPlayer = -1;
-    this.players = [];
-    this.playerLives = [];
     this.countdown = 0;
+    
     setInterval(this.tick.bind(this), 1000);
   }
 
@@ -31,49 +31,51 @@ class Gamestate{
   goNext(){
     var index = Math.floor(Math.random() * this.wordlist.length);
     this.word = this.wordlist[index];
-    this.word = "truce"
     this.yellow = [[], [], [], [], []];
     this.green = ['0', '0', '0', '0', '0'];
     this.black = [];
     this.history = [];
-    this.score = [];
-    this.idcnt = 0;
   }
 
   nextTurn(){
     this.countdown = 15;
-    this.currentPlayer ++;
-    this.currentPlayer %= this.players.length;
+
+    this.queue.push(this.queue.shift());
   }
 
   bomb(){
-    if (this.currentPlayer == -1){
+    if (this.queue.length == 0){
       return;
     }
-    --this.playerLives[this.currentPlayer];
-    if (this.playerLives[this.currentPlayer] == 0){
-      this.playerLives.splice(this.currentPlayer, 1);
-      this.players.splice(this.currentPlayer, 1);
-      this.score.splice(this.currentPlayer, 1);
-      this.currentPlayer--;
+    --this.players[this.queue[0]].lives;
+    if (this.players[this.queue[0]].lives == 0){
+      this.players[this.queue[0]].score = 0;
+      this.players[this.queue[0]].lives = 3;
+
     }
   }
 
   join(newID){
-    this.players.push(newID);
-    this.playerLives.push(3);
-    this.score.push(0);
-    if (this.currentPlayer == -1){
-      this.nextTurn();
+    this.players[newID] = {
+      id : newID,
+      lives : 3,
+      score  : 0, 
+      highscore : 0
+    };
+
+    if (this.queue.length == 0) {
+      this.countdown = 15;
     }
+    this.queue.push(newID);
   }
 
   snapshot(){
-    return {history : this.history, playerData : [this.players, this.playerLives, this.score], current : this.currentPlayer};
+    return {history : this.history, playerData : this.players, current : this.queue[0]};
   }
 
   guessWord(Guessedword, uid){
-    if (uid != this.players[this.currentPlayer]) return 0;
+    console.log(this.word);
+    if (uid != this.players[this.queue[0]].id) return 0;
     else{
       var flag = 1;
       for (var i = 0; i < 5; ++i){
@@ -95,7 +97,7 @@ class Gamestate{
       }
 
       if (!flag) {
-        this.bomb(this.currentPlayer);
+        this.bomb();
         this.nextTurn();
         return 0;
       }
@@ -141,12 +143,10 @@ class Gamestate{
 
       this.history.push([Guessedword, feedback]);
       if (this.word == Guessedword){
-        this.score[this.currentPlayer]++;
-        
-        this.playerLives[this.currentPlayer]++;
-        if (this.playerLives[this.currentPlayer] > 3) {
-          this.playerLives[this.currentPlayer] = 3;
-        }
+        this.players[uid].score++;
+        this.players[uid].highscore = Math.max(this.players[uid].highscore, this.players[uid].score);
+        this.players[uid].lives = Math.min(this.players[uid].lives+1, 3);
+
         this.goNext();
       }
       this.nextTurn();
