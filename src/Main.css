@@ -1,0 +1,60 @@
+main {
+  width: 100vw;
+  height: 100vh;
+  
+  background: #222;
+  color: #ccc;
+}
+
+.flex-vertical {
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.flex-horizotal {
+  display: flex;
+  flex-flow: row;
+  align-items: stretch;
+  justify-content: center;
+}
+
+#layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 2rem 4rem 1fr 10rem;
+  grid-template-areas: "header header" 
+    "players players"
+    "wordle-history chatbox"
+    "wordle-keyboard wordle-keyboard";
+  gap: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+}
+
+#header {
+  grid-area: header;
+  text-align: center;
+}
+
+#players {
+  grid-area: players;
+  background: #0408;
+}
+
+#wordle-history {
+  grid-area: wordle-history;
+  background: #4008;
+}
+
+#chatbox {
+  grid-area: chatbox;
+  background: #0048;
+}
+
+#wordle-keyboard {
+  grid-area: wordle-keyboard;
+  background: #4408;
+}
