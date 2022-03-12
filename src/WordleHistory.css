@@ -1,3 +1,24 @@
+@keyframes err-anim {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+.guess-row {
+  position: relative;
+}
+
+.guess-err {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  animation: err-anim 1s ease-out 0s forwards 1;
+  background: #f003;
+}
+
 .wordle-char {
   text-align: center;
   font-size: 1.2rem;
@@ -9,16 +30,35 @@
   background: #444;
 }
 
+@keyframes black-anim {
+  from {background: #444;}
+  to {background: #111;}
+}
+
+@keyframes yellow-anim {
+  from {background: #444;}
+  to {background: #660;}
+}
+
+@keyframes green-anim {
+  from {background: #444;}
+  to {background: #060;}
+}
+
+
 .wordle-char.black {
-  background: #111;
+  /* background: #111; */
+  animation: black-anim 0.5s ease-in-out 0s forwards 1;
 }
 
 .wordle-char.yellow {
-  background: #660;
+  /* background: #660; */
+  animation: yellow-anim 0.5s ease-in-out 0s forwards 1;
 }
 
 .wordle-char.green {
-  background: #060;
+  /* background: #060; */
+  animation: green-anim 0.5s ease-in-out 0s forwards 1;
 }
 
 .new-round {

@@ -28,11 +28,19 @@ const Main = () => {
       console.log("Guessing", guess)
       const guessString = guess.join("").toLowerCase();
       if (guess.length != 5) {
-        setErr("Guess a full word!")
+        setErr("Guess is not 5 letters")
+        setTimeout(() => {
+          setErr(null)
+        }, 1000);
+        
       } else if (!(guessString in allowedGuesses)) {
         console.log(allowedGuesses)
         // check if real word here
-        setErr("Guess is not a word!")
+        setErr("Guess is not a word")
+        setTimeout(() => {
+          setErr(null)
+        }, 1000);
+
         console.log("Guess is not a word!")
       } else {
         console.log("Sending guess!")
@@ -59,7 +67,7 @@ const Main = () => {
       <span>WORDLE B<FaBomb/>MB</span>
     </div>
     <div id="wordle-history">
-      <WordleHistory current={guess}/>
+      <WordleHistory current={guess} err={err}/>
     </div>
     <div id="players">
       <Players/>

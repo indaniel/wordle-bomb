@@ -34,12 +34,12 @@ main {
 
 #wordle-history {
   grid-area: wordle-history;
-  background: #4008;
+  /* background: #4008; */
 }
 
 #chatbox {
   grid-area: chatbox;
-  background: #0048;
+  /* background: #0048; */
 }
 
 #wordle-keyboard {
