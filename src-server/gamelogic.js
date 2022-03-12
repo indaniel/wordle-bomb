@@ -83,7 +83,7 @@ class Gamestate{
   }
 
   snapshot(){
-    return {history : this.history.slice(-10), playerData : this.players, current : this.queue[0], queue: this.queue};
+    return {history : this.history.slice(-10), playerData : this.players, current : this.queue[0], queue: this.queue, "Y" : this.yellow, "B" : this.black, "G" : this.green };
   }
 
   stayAlive(uid) {
