@@ -5,8 +5,13 @@ class Gamestate{
   
   constructor(forceTurn){
       
-    this.wordlist = fs.readFileSync('./src-server/official_word_list.txt', 'utf8').split('\r\n');
-    this.allowedWordlist =  fs.readFileSync('./src-server/complete_word_list.txt', 'utf8').split('\r\n');
+    this.wordlist = fs.readFileSync('./src-server/official_word_list.txt', 'utf8').split('\n').map(x => x.trim());
+    this.allowedWordlist =  fs.readFileSync('./src-server/complete_word_list.txt', 'utf8').split('\n').map(x => x.trim());
+
+
+    console.log("WORDLISTS")
+    console.log(this.wordlist.length)
+    console.log(this.allowedWordlist.length)
 
     this.forceTurn = forceTurn;
     this.players = {};
@@ -26,7 +31,6 @@ class Gamestate{
       this.nextTurn();
     }
   }
-
 
   goNext(){
     var index = Math.floor(Math.random() * this.wordlist.length);
@@ -98,22 +102,30 @@ class Gamestate{
       var flag = 1;
 
       if (!(this.allowedWordlist.includes(Guessedword))){
+        console.log("flagged illegal", Guessedword)
         flag = 0;
       }
       var wordCopy = this.word.split("");
       Guessedword = Guessedword.split("");
       for (var i = 0; i < 5; ++i){
-        if (this.green[i] != Guessedword[i] && this.green[i] != '0') flag = 0;
-      }
-      
-      for (var i = 0; i < 5; ++i){
-        if (this.black.includes(Guessedword[i])){
+        if (this.green[i] != Guessedword[i] && this.green[i] != '0') {
+          console.log("flagged green", i, Guessedword[i])
           flag = 0;
         }
       }
       
       for (var i = 0; i < 5; ++i){
-        if (this.yellow[i].includes(Guessedword[i])) flag = 0;  
+        if (this.black.includes(Guessedword[i])){
+          flag = 0;
+          console.log("flagged black", i, Guessedword[i])
+        }
+      }
+      
+      for (var i = 0; i < 5; ++i){
+        if (this.yellow[i].includes(Guessedword[i])) {
+          flag = 0; 
+          console.log("flagged yellow", i, Guessedword[i])
+        }  
       }
 
       var feedback = ['black', 'black', 'black', 'black', 'black'];

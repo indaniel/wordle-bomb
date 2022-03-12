@@ -69,7 +69,14 @@ const Main = () => {
       socket.on("update", (e) => {
         console.log("update", e)
         setGameState(e)
+
+        if (e.current === userId) {
+          socket.emit("alive", {
+            user: userId
+          })
+        }
       })
+      
     } else {
       setSocket(io('http://localhost:3000',{path:"/api/socket"}))
     }

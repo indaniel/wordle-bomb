@@ -18,6 +18,12 @@ io.on('connection',(socket)=>{
   socket.on('join',(data)=>{
     console.log(data.user, "joined")
     gamestate.join(data.user)
+    socket.emit("update", gamestate.snapshot())
+  }) 
+  
+  socket.on('alive',(data)=>{
+    console.log(data.user, "alive")
+    gamestate.stayAlive(data.user)
   }) 
   socket.on("guess",(data)=>{
     console.log(data.user, "guessed", data.guess)
