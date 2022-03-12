@@ -22,8 +22,15 @@ class Gamestate{
     this.countdown -= 1;
     if (this.countdown <= 0){
       // logic
-      this.bomb();
-      this.nextTurn();
+      if (this.players[this.queue[0]] === false) {
+        // player did not respond to ping, remove from game
+        delete this.players[this.queue[0]]
+        this.queue.shift()
+        this.nextTurn(false);
+      } else {
+        this.bomb();
+        this.nextTurn();
+      }
     }
   }
 
@@ -37,21 +44,25 @@ class Gamestate{
     this.history = [];
   }
 
-  nextTurn(){
+  nextTurn(needsShift=true){
     this.countdown = 15;
 
-    this.queue.push(this.queue.shift());
+    if (this.queue.length !== 0) {
+      if (needsShift) {
+        this.queue.push(this.queue.shift());
+      }
+      this.players[this.queue[0]].alive = false;
+    }
   }
 
   bomb(){
-    if (this.queue.length == 0){
+    if (this.queue.length === 0){
       return;
     }
     --this.players[this.queue[0]].lives;
-    if (this.players[this.queue[0]].lives == 0){
+    if (this.players[this.queue[0]].lives === 0){
       this.players[this.queue[0]].score = 0;
       this.players[this.queue[0]].lives = 3;
-
     }
   }
 
@@ -60,7 +71,8 @@ class Gamestate{
       id : newID,
       lives : 3,
       score  : 0, 
-      highscore : 0
+      highscore : 0,
+      alive: false
     };
 
     if (this.queue.length == 0) {
@@ -70,7 +82,14 @@ class Gamestate{
   }
 
   snapshot(){
-    return {history : this.history, playerData : this.players, current : this.queue[0]};
+    return {history : this.history, playerData : this.players, current : this.queue[0], queue: this.queue};
+  }
+
+  stayAlive(uid) {
+    if (uid in this.players) {
+      this.players[uid].alive = true;
+    }
+    this.players[uid]
   }
 
   guessWord(Guessedword, uid){
@@ -98,8 +117,8 @@ class Gamestate{
 
       if (!flag) {
         this.bomb();
-        this.nextTurn();
-        return 0;
+        // this.nextTurn();
+        // return 0;
       }
 
       var feedback = ['B', 'B', 'B', 'B', 'B'];
@@ -150,7 +169,7 @@ class Gamestate{
         this.goNext();
       }
       this.nextTurn();
-      return [Guessedword, feedback];
+      return [Guessedword, feedback, flag];
     }
   }
 }
