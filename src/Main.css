@@ -8,13 +8,13 @@ main {
 
 #layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: 2rem 4rem 1fr 10rem;
-  grid-template-areas: "header header" 
-    "players players"
-    "wordle-history chatbox"
-    "wordle-keyboard wordle-keyboard";
-  gap: 1rem;
+  grid-template-areas: "header" 
+    "players"
+    "wordle-history"
+    "wordle-keyboard";
+  gap: 1rem 0rem;
 }
 
 @media only screen and (max-width: 600px) {
@@ -23,6 +23,8 @@ main {
 #header {
   grid-area: header;
   text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.25rem;
 }
 
 #players {

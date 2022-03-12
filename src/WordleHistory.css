@@ -1,6 +1,7 @@
 .wordle-char {
   text-align: center;
   font-size: 1.2rem;
+  height: 1.5rem;
   font-weight: 600;
   margin: 0.2rem;
   padding: 0.4rem 0rem;
