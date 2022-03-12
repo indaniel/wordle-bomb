@@ -33,7 +33,10 @@ app.get("/api/gamestate", (req, res) => {
 server.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
   gamestate = new Gamestate(function(){
-    io.sockets.emit("update",gamestate.snapshot())
+    console.log("Emitting")
+    const ss = gamestate.snapshot();
+    console.log(ss)
+    io.sockets.emit("update",ss)
   });
 
   // setInterval(() => {

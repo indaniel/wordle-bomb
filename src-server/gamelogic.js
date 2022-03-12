@@ -12,6 +12,7 @@ class Gamestate{
     this.players = {};
     this.countdown = 0;
     this.queue = []
+    this.history = []
     
     setInterval(this.tick.bind(this), 1000);
     this.goNext();
@@ -33,7 +34,9 @@ class Gamestate{
     this.yellow = [[], [], [], [], []];
     this.green = ['0', '0', '0', '0', '0'];
     this.black = [];
-    this.history = [];
+    this.history.push({
+      type: "new"
+    });
   }
 
   nextTurn(needsShift=true){
@@ -76,7 +79,7 @@ class Gamestate{
   }
 
   snapshot(){
-    return {history : this.history, playerData : this.players, current : this.queue[0], queue: this.queue};
+    return {history : this.history.slice(-10), playerData : this.players, current : this.queue[0], queue: this.queue};
   }
 
   stayAlive(uid) {
@@ -93,6 +96,12 @@ class Gamestate{
       return 0;
     } else{
       var flag = 1;
+
+      if (!(this.allowedWordlist.includes(Guessedword))){
+        flag = 0;
+      }
+      var wordCopy = this.word.split("");
+      Guessedword = Guessedword.split("");
       for (var i = 0; i < 5; ++i){
         if (this.green[i] != Guessedword[i] && this.green[i] != '0') flag = 0;
       }
@@ -107,19 +116,7 @@ class Gamestate{
         if (this.yellow[i].includes(Guessedword[i])) flag = 0;  
       }
 
-      if (!(this.allowedWordlist.includes(Guessedword))){
-        flag = 0;
-      }
-
-      if (!flag) {
-        this.bomb();
-        // this.nextTurn();
-        // return 0;
-      }
-
       var feedback = ['black', 'black', 'black', 'black', 'black'];
-      var wordCopy = this.word.split("");
-      Guessedword = Guessedword.split("");
 
 
       for (var i = 0; i < 5; i++){
@@ -156,13 +153,30 @@ class Gamestate{
         }
       }
 
-      this.history.push([Guessedword, feedback]);
+      this.history.push({
+        type: "guess",
+        data: [
+          [Guessedword[0], feedback[0]],
+          [Guessedword[1], feedback[1]],
+          [Guessedword[2], feedback[2]],
+          [Guessedword[3], feedback[3]],
+          [Guessedword[4], feedback[4]],
+        ]
+      });
+
       if (this.word == Guessedword){
         this.players[uid].score++;
         this.players[uid].highscore = Math.max(this.players[uid].highscore, this.players[uid].score);
         this.players[uid].lives = Math.min(this.players[uid].lives+1, 3);
 
         this.goNext();
+        
+      }
+
+      if (!flag) {
+        this.bomb();
+        // this.nextTurn();
+        // return 0;
       }
       this.nextTurn();
       return [Guessedword, feedback, flag];

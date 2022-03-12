@@ -68,6 +68,7 @@ const Main = () => {
   
       socket.on("update", (e) => {
         console.log("update", e)
+        setGameState(e)
       })
     } else {
       setSocket(io('http://localhost:3000',{path:"/api/socket"}))
@@ -79,7 +80,7 @@ const Main = () => {
       <span>WORDLE B<FaBomb/>MB</span>
     </div>
     <div id="wordle-history">
-      <WordleHistory current={guess} err={err}/>
+      <WordleHistory historyState={gameState && gameState.history || []} current={guess} err={err}/>
     </div>
     <div id="players">
       <Players/>
